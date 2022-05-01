@@ -1,0 +1,34 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "POC of missions control",
+  "scripts": {
+    "deploy": "npx hardhat run --network localhost scripts/deploy.js",
+    "build": "yarn run barrels && yarn run tsc --project tsconfig.compile.json",
+    "barrels": "barrelsby --config .barrelsby.json",
+    "start": "yarn run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+    "start:prod": "cross-env NODE_ENV=production node dist/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@tsed/cli-plugin-eslint": "3.20.8",
+    "@tsed/cli-plugin-jest": "3.20.8",
+    "chai": "^4.3.6",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.2",
+    "hardhat": "^2.9.3",
+    "prettier": "^2.6.2"
+  },
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "tsed": {
+    "packageManager": "yarn",
+    "convention": "default",
+    "architecture": "default"
+  }
+}
