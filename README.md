@@ -2,10 +2,11 @@
 POC of serverside-signed missions interactions
 
 #Deploy on local hardhat node
-1. npm install
-2. npx hardhat node
-3. npx hardhat compile
-4. npx hardhat run --network localhost scripts/deploy.js
+1. cd contracts
+2. npm install
+3. npx hardhat node
+4. npx hardhat compile
+5. npx hardhat run --network localhost scripts/deploy.js
 
 #Start Backend Server
 
