@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import ResourceArtifact from './artifact/contracts/Verifier.sol/Verifier.json'
+import StampostArtifact from './artifact/contracts/Stampost.sol/Stampost.json'
 
 const stampostContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
 
 const _intializeContract = async init => {
-  const contract = new ethers.Contract(resourceAddress, ResourceArtifact.abi, init)
+  const contract = new ethers.Contract(resourceAddress, StampostArtifact.abi, init)
   return contract
 }
 
 export default function ConnectWallet() {
-  const [signature, setSignature] = useState({})
   const [error, setError] = useState()
-  const [claimError, setClaimError] = useState()
-  const [serverSideSignature, setServerSideSignature] = useState({})
-  const [toggleClaim, setToggleClaim] = useState(false)
   const [contract, setContract] = useState()
 
   const connectWallet = async () => {
@@ -22,26 +18,18 @@ export default function ConnectWallet() {
     try {
       if (!window.ethereum) throw new Error('No crypto wallet found. Please install it.')
 
+      // this call is for Connect Wallet button
       await window.ethereum.send('eth_requestAccounts')
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-      const signature = await signer.signMessage(message)
-      const address = await signer.getAddress()
 
-      const contract = await _intializeContract(signer)
-      setContract(contract)
-
-      return {
-        message,
-        signature,
-        address,
-      }
+      // we call contract write data as a signer (metamask account)
+      const _contract = await _intializeContract(signer)
+      setContract(_contract)
     } catch (err) {
       setError(err.message)
     }
   }
-
-
 
   return (
     <>
