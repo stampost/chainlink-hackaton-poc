@@ -14,8 +14,8 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Verifier = await hre.ethers.getContractFactory('Verifier')
-  const contract = await Verifier.deploy()
+  const Stampost = await hre.ethers.getContractFactory('Stampost')
+  const contract = await Stampost.deploy()
 
   await contract.deployed()
 
@@ -26,7 +26,7 @@ async function main() {
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
+  .catch(error => {
     console.error(error)
     process.exit(1)
   })
