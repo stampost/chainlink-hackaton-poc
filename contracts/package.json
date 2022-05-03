@@ -9,17 +9,18 @@
     "start": "yarn run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js"
   },
-  "dependencies": {},
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/hardhat-upgrades": "^1.17.0",
     "@tsed/cli-plugin-eslint": "3.20.8",
     "@tsed/cli-plugin-jest": "3.20.8",
     "chai": "^4.3.6",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "ethereum-waffle": "^3.4.4",
-    "ethers": "^5.6.2",
+    "ethers": "^5.6.4",
     "hardhat": "^2.9.3",
     "prettier": "^2.6.2"
   },
