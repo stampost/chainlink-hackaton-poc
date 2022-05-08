@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import StampostArtifact from './artifact/contracts/Stampost.sol/Stampost.json'
+import StampostArtifact from '../../frontend/artifact/contracts/Stampost.sol/Stampost.json'
 
 const stampostContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
 
