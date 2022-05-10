@@ -5,8 +5,9 @@ import { useRouter } from 'next/router'
 
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
-import { Alert, Button } from 'antd'
+import { Alert, Button, Layout } from 'antd'
 import { injectedConnectorInstance } from '../util/connector'
+import { Content, Footer } from 'antd/lib/layout/layout'
 
 const ConnectWallet = () => {
   const router = useRouter()
@@ -28,7 +29,7 @@ const ConnectWallet = () => {
   return (
     <div>
       {active ? (
-        <div>✅ </div>
+        <div>✅</div>
       ) : (
         <Button type='primary' onClick={onClick}>
           Connect Wallet
@@ -40,11 +41,15 @@ const ConnectWallet = () => {
 
 const Connect: NextPage = () => {
   return (
-    <div>
-      <main className={styles.main}>
-        <img src={'/logo.svg'} />
-        <h3>It's Time To Get Connected</h3>
+    <Layout className={styles.layout}>
+      <Content className={styles.content}>
+        <img src={'/logo.svg'} style={{ marginBottom: '2rem' }} />
+        <h3 style={{ fontSize: 24, fontWeight: 400, marginBottom: '2rem' }}>
+          It's Time To Get Connected
+        </h3>
         <ConnectWallet />
+      </Content>
+      <Footer>
         <Alert
           message='Процесс подключения'
           description='После нажатия на кнопку Connect Wallet откроется окно Metamask в котором произойдет подключение'
@@ -52,8 +57,8 @@ const Connect: NextPage = () => {
           showIcon
           style={{ width: 560 }}
         />
-      </main>
-    </div>
+      </Footer>
+    </Layout>
   )
 }
 

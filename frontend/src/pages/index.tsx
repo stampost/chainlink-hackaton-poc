@@ -12,10 +12,10 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (active) {
-      console.log('pushing dashboard')
+      // console.log('pushing dashboard')
       router.push('/dashboard')
     } else {
-      console.log('pushing connect')
+      // console.log('pushing connect')
       router.push('/connect')
     }
   }, [active])
