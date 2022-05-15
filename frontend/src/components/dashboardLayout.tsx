@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { useEffect } from 'react'
@@ -7,14 +6,16 @@ import { Button, Layout } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
 import { PlusCircleFilled } from '@ant-design/icons'
 import { Typography } from 'antd'
+import { Navbar } from './navbar'
 
 const { Text } = Typography
 
-const Dashboard: NextPage = () => {
+// @ts-ignore
+export const DashboardLayout = ({ children }) => {
   const { chainId, account, activate, active, library } = useWeb3React<Web3Provider>()
 
   useEffect(() => {
-    console.log('dashboard', chainId, account, active)
+    console.log('dashboardLayout', chainId, account, active)
   })
 
   return (
@@ -25,6 +26,7 @@ const Dashboard: NextPage = () => {
           <Button icon={<PlusCircleFilled />} type='primary'>
             Compose
           </Button>
+          <Navbar />
         </div>
         <div className={styles.headerRightBlock}>
           <div className={styles.alignVerticalCenter}>
@@ -48,9 +50,7 @@ const Dashboard: NextPage = () => {
           </div>
         </div>
       </Header>
-      <Content className={styles.content}>content</Content>
+      <Content className={styles.content}>{children}</Content>
     </Layout>
   )
 }
-
-export default Dashboard
