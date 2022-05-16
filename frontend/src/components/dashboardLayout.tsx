@@ -7,23 +7,29 @@ import { Content, Header } from 'antd/lib/layout/layout'
 import { PlusCircleFilled } from '@ant-design/icons'
 import { Typography } from 'antd'
 import { Navbar } from './navbar'
+import { useRouter } from 'next/router'
 
 const { Text } = Typography
 
 // @ts-ignore
 export const DashboardLayout = ({ children }) => {
   const { chainId, account, activate, active, library } = useWeb3React<Web3Provider>()
+  const router = useRouter()
 
   useEffect(() => {
     console.log('dashboardLayout', chainId, account, active)
   })
+
+  const onComposeClick = () => {
+    router.push('/dashboard/compose')
+  }
 
   return (
     <Layout className={styles.layout}>
       <Header className={styles.header}>
         <div className={styles.headerLeftBlock}>
           <img src={'/logo.svg'} />
-          <Button icon={<PlusCircleFilled />} type='primary'>
+          <Button icon={<PlusCircleFilled />} type='primary' onClick={onComposeClick}>
             Compose
           </Button>
           <Navbar />

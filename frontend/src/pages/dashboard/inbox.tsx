@@ -1,7 +1,7 @@
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { ReactElement, useEffect } from 'react'
-import { Typography } from 'antd'
+import { Button, Typography } from 'antd'
 import { DashboardLayout } from '../../components/dashboardLayout'
 import { NextPageWithLayout } from '../_app'
 
@@ -14,7 +14,7 @@ const Inbox: NextPageWithLayout = () => {
     console.log('dashboard inbox', chainId, account, active)
   })
 
-  return <div>content</div>
+  return <div>inbox</div>
 }
 
 Inbox.getLayout = function getLayout(page: ReactElement) {
