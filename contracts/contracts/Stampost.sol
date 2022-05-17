@@ -184,16 +184,16 @@ contract Stampost is Ownable {
   }
 
   function getOutcomingRequests() public view returns (PublicKeyRequest[] memory) {
-    uint256 senderTotalRequests = senderTotalRequests[msg.sender];
-    console.log("senderTotalRequests", senderTotalRequests);
+    uint256 senderTotalRequestsCount = senderTotalRequests[msg.sender];
+    console.log("senderTotalRequestsCount", senderTotalRequestsCount);
 
-    if (senderTotalRequests == 0) {
+    if (senderTotalRequestsCount == 0) {
       return new PublicKeyRequest[](0);
     }
 
-    PublicKeyRequest[] memory result = new PublicKeyRequest[](senderTotalRequests);
+    PublicKeyRequest[] memory result = new PublicKeyRequest[](senderTotalRequestsCount);
     
-    for (uint256 i = 0; i < senderTotalRequests; i++) {
+    for (uint256 i = 0; i < senderTotalRequestsCount; i++) {
       uint256 requestId = senderRequestById[msg.sender][i+1];
       console.log("requestId", requestId);
       console.log(requests[requestId].stamps);
