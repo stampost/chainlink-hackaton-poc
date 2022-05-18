@@ -1,28 +1,32 @@
-import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
-import { ReactElement, useEffect } from 'react'
-import { Typography } from 'antd'
+import { ReactElement, useEffect, useState } from 'react'
+import { Button, Typography } from 'antd'
 import { DashboardLayout } from '../../components/dashboardLayout'
 import { NextPageWithLayout } from '../_app'
 import useSWR from 'swr'
-import { Contract } from '@ethersproject/contracts'
-import STAMP from '../../../../contracts/deployments/goerli/STAMP.json'
-import Stampost from '../../../../contracts/deployments/goerli/Stampost.json'
+import { ContractName, useContract } from '../../hooks/useContract'
 
 const { Text } = Typography
 
 const Inbox: NextPageWithLayout = () => {
-  const { chainId, account, activate, active, library } = useWeb3React<Web3Provider>()
+  const STAMP = useContract(ContractName.STAMP)!
+  const Stampost = useContract(ContractName.Stampost)!
+  const [result, setResult] = useState()
 
-  useEffect(() => {
-    const stamp = new Contract(STAMP.address, STAMP.abi, library!.getSigner())
-    const stampost = new Contract(Stampost.address, Stampost.abi, library!.getSigner())
+  // useEffect(() => {
+  //   const symbol = STAMP.symbol().then((result: any) => console.log({ result }))
+  // })
 
-    const symbol = stamp.symbol().then((result: any) => console.log({ result }))
-    console.log('dashboard trash', chainId, account, active)
-  })
+  const onClick = () => {
+    STAMP.symbol().then((result: any) => console.log({ result }))
+  }
 
-  return <div>trash</div>
+  return (
+    <div>
+      <Button onClick={onClick}>DO</Button>
+      <div>{result}</div>
+    </div>
+  )
 }
 
 Inbox.getLayout = function getLayout(page: ReactElement) {
