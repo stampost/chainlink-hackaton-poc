@@ -10,6 +10,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     STAMP: await ethers.getContract("STAMP"),
   };
 
+  console.log("contracts.STAMP.address", contracts.STAMP.address);
   await contracts.Stampost.setStampToken(contracts.STAMP.address);
   await contracts.STAMP.setStampost(contracts.Stampost.address);
 

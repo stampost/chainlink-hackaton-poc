@@ -16,7 +16,7 @@ contract STAMP is IERC20, Ownable {
 
     mapping(address => uint256) balances;
     mapping(address => mapping (address => uint256)) allowed;
-    mapping(address => mapping (address => uint256)) locked;
+    mapping(address => mapping (address => uint256)) public locked;
     mapping(address => mapping (address => uint256)) waiting;
 
     uint256 totalSupply_;
