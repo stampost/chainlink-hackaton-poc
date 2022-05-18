@@ -14,6 +14,7 @@ export enum ContractName {
 const getContract = (contractName: ContractName, library: Web3Provider): Contract | undefined => {
   switch (contractName) {
     case ContractName.STAMP:
+      // Are we sure that library exists here? How to remove ! sign?
       return new Contract(STAMP.address, STAMP.abi, library!.getSigner())
     case ContractName.Stampost:
       return new Contract(Stampost.address, Stampost.abi, library!.getSigner())

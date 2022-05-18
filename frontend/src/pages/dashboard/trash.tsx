@@ -9,6 +9,7 @@ import { ContractName, useContract } from '../../hooks/useContract'
 const { Text } = Typography
 
 const Inbox: NextPageWithLayout = () => {
+  // Is it ok to have ! signs here?
   const STAMP = useContract(ContractName.STAMP)!
   const Stampost = useContract(ContractName.Stampost)!
   const [result, setResult] = useState()
