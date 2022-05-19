@@ -19,6 +19,7 @@ contract Stampost is Ownable {
   enum PublicKeyRequestStatus { PENDING, ACCEPTED, DECLINED }
 
   struct PublicKeyRequest {
+    uint256 id;
     uint256 timestamp;
     address from;
     address to;
@@ -102,8 +103,11 @@ contract Stampost is Ownable {
 
     publicKeys[msg.sender] = PublicKey(_publicKey, true);
 
+    totalRequests++;
+
     // create request
     PublicKeyRequest memory request = PublicKeyRequest(
+      totalRequests,
       block.timestamp,
       msg.sender,
       _recepient,
@@ -119,7 +123,7 @@ contract Stampost is Ownable {
   }
 
   function saveRequest(address _recepient, PublicKeyRequest memory _request) private {
-    totalRequests++;
+    // totalRequests++;
     requests[totalRequests] = _request;
     addressTotalRequests[_recepient]++;
     senderTotalRequests[msg.sender]++;
@@ -200,7 +204,7 @@ contract Stampost is Ownable {
       result[i] = requests[requestId];
     }
 
-    console.log("length", result.length);
+    console.log("result.length", result.length);
     return result;
   }
 

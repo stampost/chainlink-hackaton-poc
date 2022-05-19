@@ -13,7 +13,7 @@ contract STAMP is IERC20, Ownable {
     string public constant symbol = "STAMP";
     uint8 public constant decimals = 18;
     address public stampost;
-
+    
     mapping(address => uint256) balances;
     mapping(address => mapping (address => uint256)) allowed;
     mapping(address => mapping (address => uint256)) public locked;

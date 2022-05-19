@@ -47,7 +47,7 @@ const Inbox: NextPageWithLayout = () => {
     Stampost.requestPublicKey(
       chainId,
       // this is recepient address
-      '0x9a4407Bf1Dc791383923cc0EA2706607c8E43eb1',
+      '0xeAd9Ecd707771F976B6A03840eC98cDfF8603bd4',
       // this is 3 stamps * 10**18
       BigInt('3000000000000000000'),
       publicKey,
@@ -79,6 +79,111 @@ const Inbox: NextPageWithLayout = () => {
     )
   }
 
+  /* request solidity type
+
+  enum PublicKeyRequestStatus { PENDING, ACCEPTED, DECLINED }
+
+  struct PublicKeyRequest {
+    uint256 id;
+    uint256 timestamp;
+    address from;
+    address to;
+    uint256 stamps;
+    PublicKeyRequestStatus status; 0,1,2  from enum above
+  }
+  */
+
+  const getStatus = (statusId: number) => {
+    switch (statusId) {
+      case 0:
+        return 'Pending'
+      case 1:
+        return 'Accepted'
+      case 2:
+        return 'Declined'
+    }
+  }
+
+  const parseRequest = (request: { [x: string]: number }) => {
+    const req = {
+      id: request['id'].toString(),
+      timestamp: request['timestamp'].toString(),
+      from: request['from'],
+      to: request['to'],
+      stamps: request['stamps'].toString(),
+      status: getStatus(request['status']),
+    }
+    return req
+  }
+
+  const onGetIncomingRequests = () => {
+    Stampost.getRequestsForAddress(account).then((result: any[]) => {
+      console.log('getRequestsForAddress response', result)
+      setResult(JSON.stringify(result.map(parseRequest), null, '\r\n'))
+    })
+  }
+
+  const onGetOutcomingRequests = () => {
+    Stampost.getOutcomingRequests().then((result: any[]) => {
+      console.log('getRequestsForAddress response', result)
+      setResult(JSON.stringify(result.map(parseRequest), null, '\r\n'))
+    })
+  }
+
+  const acceptRequest = async () => {
+    let reqId = prompt('Request Id')
+    if (!reqId) return
+    const publicKey = await generatePublicKey()
+
+    Stampost.acceptPublicKeyRequest(+reqId, publicKey)
+      .then(async (tx: { wait: () => any }) => {
+        console.log({ tx })
+        setPending(true)
+        const r = await tx.wait()
+        // here is receipt
+        console.log({ r })
+        setPending(false)
+        setResult('request sent')
+        console.log('ready', r)
+      })
+      .catch((error: any) => {
+        // metamask gets error.error object - try to send to the one address twice
+        // or just common error.message - try to cancel transaction sign in metamask
+        setResult(error.error ? error.error.message : error.message)
+      })
+  }
+
+  const addToken = async () => {
+    const tokenAddress = STAMP.address
+    const tokenSymbol = 'STAMP'
+    const tokenDecimals = 18
+    const tokenImage = 'http://placekitten.com/200/300'
+
+    try {
+      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+      const wasAdded = await (window as any).ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20', // Initially only supports ERC20, but eventually more!
+          options: {
+            address: tokenAddress, // The address that the token is at.
+            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+            decimals: tokenDecimals, // The number of decimals in the token
+            image: tokenImage, // A string url of the token logo
+          },
+        },
+      })
+
+      if (wasAdded) {
+        console.log('Thanks for your interest!')
+      } else {
+        console.log('Your loss!')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   //incorrect implementation in contract, fix soon
   // const onGetLocked = () => {
   //   // result is BigNumber - should be divided to 10**18 , leave
@@ -100,8 +205,25 @@ const Inbox: NextPageWithLayout = () => {
           </Space>
         )}
       </div>
-      <Button onClick={onRequestAccess}>Request Access</Button>
-      <Button onClick={onGetBalance}>Get STAMP balance</Button>
+      <div>
+        <Button onClick={addToken}>Add token to metamask</Button>
+      </div>
+      <div>
+        <Button onClick={onGetBalance}>Get STAMP balance</Button>
+      </div>
+      <div>
+        <Button onClick={onRequestAccess}>Request Access</Button>
+      </div>
+      <div>
+        <Button onClick={onGetIncomingRequests}>Get Incoming Requests</Button>
+      </div>
+      <div>
+        <Button onClick={onGetOutcomingRequests}>Get Outcoming Requests</Button>
+      </div>
+      <div>
+        <Button onClick={acceptRequest}>Accept Request</Button>
+      </div>
+
       {/* <Button onClick={onGetLocked}>Get STAMP locked</Button> */}
     </div>
   )

@@ -11,11 +11,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   };
 
   console.log("contracts.STAMP.address", contracts.STAMP.address);
+  console.log("set stampost.stamp");
   await contracts.Stampost.setStampToken(contracts.STAMP.address);
-  await contracts.STAMP.setStampost(contracts.Stampost.address);
 
-  const stampost_stamptoken = await contracts.Stampost.stamp_token_address();
-  console.log({ stampost_stamptoken });
+  console.log("set stamp.stampost");
+  await contracts.STAMP.setStampost(contracts.Stampost.address);
 };
 
 export default func;
