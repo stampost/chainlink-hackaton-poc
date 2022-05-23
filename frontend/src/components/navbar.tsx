@@ -34,6 +34,7 @@ export const Navbar = () => {
     <div>
       {routes.map(route => (
         <Button
+          key={route.url}
           icon={route.icon}
           shape='round'
           type={router.route === route.url ? 'default' : 'text'}
