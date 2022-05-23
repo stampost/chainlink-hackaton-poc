@@ -15,6 +15,7 @@ export type MessageInfo = {
   from: string
   to: string
   stamps: string
+  statusId: number
   status: string
 }
 
@@ -25,6 +26,7 @@ export const parseRequest = (request: { [x: string]: number }): MessageInfo => {
     from: request['from'],
     to: request['to'],
     stamps: request['stamps'].toString(),
+    statusId: request['status'],
     status: getStatusById(request['status']),
   }
   return req

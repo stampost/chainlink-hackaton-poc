@@ -14,3 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.ant-list-items {
+  border-top: 1px solid #D9D9D9;
+  border-bottom: 1px solid #D9D9D9;
+}
+
+.ant-list-split .ant-list-item {
+  border-bottom: 1px solid #D9D9D9;
+}

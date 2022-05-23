@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  background: unset;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.leftBlock {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.indicatorBlock {
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dateBlock {
+  width: 170px;
+}
+
+.addressBlock {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.rightBlock {
+  line-height: 24px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}

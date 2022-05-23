@@ -8,6 +8,8 @@ import { ContractName, useContract } from '../../hooks/useContract'
 import { MessageInfo, parseRequest } from '../../util/stampost'
 import { ListItem } from '../../components/listItem'
 
+import mockJsonList from '../../test/responses/getRequestsForAddress.json'
+
 const { Text } = Typography
 
 const Inbox: NextPageWithLayout = () => {
@@ -22,7 +24,8 @@ const Inbox: NextPageWithLayout = () => {
         console.log('getRequestsForAddress response', resultIncoming)
         const resultMapped = resultIncoming.map(parseRequest)
         console.log('resultMapped response', resultMapped)
-        setListRequests(resultMapped)
+        //setListRequests(resultMapped)
+        setListRequests(mockJsonList)
       })
     }
   }, [Stampost])
@@ -31,6 +34,7 @@ const Inbox: NextPageWithLayout = () => {
     <List
       itemLayout='horizontal'
       dataSource={listRequests}
+      style={{ width: '100%', marginTop: 16 }}
       renderItem={item => (
         <List.Item>
           <Skeleton title={false} loading={isLoading} active>
@@ -43,7 +47,11 @@ const Inbox: NextPageWithLayout = () => {
 }
 
 Inbox.getLayout = function getLayout(page: ReactElement) {
-  return <DashboardLayout>{page}</DashboardLayout>
+  return (
+    <DashboardLayout contentStyle={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+      {page}
+    </DashboardLayout>
+  )
 }
 
 export default Inbox

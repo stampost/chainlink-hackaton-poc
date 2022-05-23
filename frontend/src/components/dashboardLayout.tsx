@@ -13,7 +13,7 @@ import { ContractName, useContract } from '../hooks/useContract'
 const { Text } = Typography
 
 // @ts-ignore
-export const DashboardLayout = ({ children }) => {
+export const DashboardLayout = ({ children, contentStyle = {} }) => {
   const { chainId, account, activate, active, library } = useWeb3React<Web3Provider>()
   const router = useRouter()
   const [stampBalance, setStampBalance] = useState(0)
@@ -68,7 +68,9 @@ export const DashboardLayout = ({ children }) => {
           </div>
         </div>
       </Header>
-      <Content className={styles.content}>{children}</Content>
+      <Content className={styles.content} style={contentStyle}>
+        {children}
+      </Content>
     </Layout>
   )
 }
