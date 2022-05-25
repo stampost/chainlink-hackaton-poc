@@ -39,6 +39,9 @@ const Inbox: NextPageWithLayout = () => {
   const onRequestAccess = async () => {
     setResult('')
 
+    let address = prompt('Address')
+    if (!address) return
+
     // here we need to catch error in toast maybe - see catch below
     const publicKey = await generatePublicKey()
 
@@ -47,10 +50,11 @@ const Inbox: NextPageWithLayout = () => {
     Stampost.requestPublicKey(
       chainId,
       // this is recepient address
-      '0xeAd9Ecd707771F976B6A03840eC98cDfF8603bd4',
+      address,
       // this is 3 stamps * 10**18
       BigInt('3000000000000000000'),
       publicKey,
+      'unencripted message',
     )
       .then(async (tx: { wait: () => any }) => {
         console.log({ tx })
@@ -112,6 +116,7 @@ const Inbox: NextPageWithLayout = () => {
       to: request['to'],
       stamps: request['stamps'].toString(),
       status: getStatus(request['status']),
+      message: request['message'],
     }
     return req
   }
