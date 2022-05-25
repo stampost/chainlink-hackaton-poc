@@ -25,6 +25,7 @@ contract Stampost is Ownable {
     address to;
     uint256 stamps;
     PublicKeyRequestStatus status;
+    string message;
   }
 
   mapping (address =>  PublicKey) public publicKeys;
@@ -88,7 +89,8 @@ contract Stampost is Ownable {
     uint256 _chainId,
     address _recepient,
     uint256 _stamps,
-    string calldata _publicKey
+    string calldata _publicKey,
+    string calldata message
   ) public {
     require(_stamps >= requestMininalFee, "Attached stamps count is not enough");
     uint256 sender_stamp_balance = STAMP(stamp_token_address).balanceOf(msg.sender);
@@ -112,7 +114,8 @@ contract Stampost is Ownable {
       msg.sender,
       _recepient,
       _stamps,
-      PublicKeyRequestStatus.PENDING
+      PublicKeyRequestStatus.PENDING,
+      message
     );
 
     saveRequest(_recepient, request);
