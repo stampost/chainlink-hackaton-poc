@@ -16,8 +16,10 @@ contract STAMP is IERC20, Ownable {
     
     mapping(address => uint256) balances;
     mapping(address => mapping (address => uint256)) allowed;
-    mapping(address => mapping (address => uint256)) public locked;
+    mapping(address => mapping (address => uint256)) locked;
     mapping(address => mapping (address => uint256)) waiting;
+    mapping(address => uint256) public totalLocked;
+    mapping(address => uint256) public totalWaiting;
 
     uint256 totalSupply_;
 
@@ -36,6 +38,8 @@ contract STAMP is IERC20, Ownable {
         balances[from] = balances[from].sub(numTokens);
         locked[from][to] = locked[from][to].add(numTokens);
         waiting[to][from] = waiting[to][from].add(numTokens);
+        totalLocked[from].add(numTokens);
+        totalWaiting[to].add(numTokens);
     }
 
     function unlock(address from, address to, uint256 numTokens) onlyStampost public {
@@ -44,6 +48,8 @@ contract STAMP is IERC20, Ownable {
         balances[to] = balances[to].add(numTokens);
         locked[from][to] = locked[from][to].sub(numTokens);
         waiting[to][from] = waiting[to][from].sub(numTokens);
+        totalLocked[from].sub(numTokens);
+        totalWaiting[to].sub(numTokens);
     }
 
 

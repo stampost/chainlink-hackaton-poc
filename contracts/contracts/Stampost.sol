@@ -12,7 +12,7 @@ contract Stampost is Ownable {
   uint256 requestMininalFee = 3e18;
 
   struct PublicKey {
-   string key;
+   bytes32 key;
    bool isSet;
   }
 
@@ -50,10 +50,11 @@ contract Stampost is Ownable {
   // letters
 
   struct Letter {
+    uint256 id;
     uint256 timestamp;
     address from;
     address to;
-    string message;
+    bytes message;
     uint256 stamps;
     bool opened;
     bool isSet;
@@ -89,7 +90,7 @@ contract Stampost is Ownable {
     uint256 _chainId,
     address _recepient,
     uint256 _stamps,
-    string calldata _publicKey,
+    bytes32 _publicKey,
     string calldata message
   ) public {
     require(_stamps >= requestMininalFee, "Attached stamps count is not enough");
@@ -156,21 +157,21 @@ contract Stampost is Ownable {
       result[i] = requests[requestId];
     }
 
-    console.log("length", result.length);
+    console.log("length result", result.length);
     return result;
   } 
 
-  function getAcceptedPublicKey(address user) public view returns (string memory) {
-    string memory key =  publicKeys[user].key;
+  function getAcceptedPublicKey(address user) public view returns (bytes32) {
+    bytes32 key =  publicKeys[user].key;
     return key;
   }
 
-  function getPublicKey(address user) public view returns (string memory){
-    string memory key =  publicKeys[user].key;
+  function getPublicKey(address user) public view returns (bytes32){
+    bytes32 key =  publicKeys[user].key;
     return key;
   }
 
-  function acceptPublicKeyRequest(uint256 requestId, string calldata publicKey) public {
+  function acceptPublicKeyRequest(uint256 requestId, bytes32 publicKey) public {
     
     require(requestId <= totalRequests, "Request doesn't exist");
 
@@ -207,7 +208,7 @@ contract Stampost is Ownable {
       result[i] = requests[requestId];
     }
 
-    console.log("result.length", result.length);
+    console.log("result.length ", result.length);
     return result;
   }
 
@@ -234,7 +235,7 @@ contract Stampost is Ownable {
 
   }
 
-  function sendMail(uint256 chainId, address _recepient, string calldata _message, uint256 _stamps) public {
+  function sendMail(uint256 chainId, address _recepient, bytes calldata _message, uint256 _stamps) public {
     // recepient has approved sender request
     uint256 requestId = senderRequestByAddress[msg.sender][_recepient];
 
@@ -253,6 +254,7 @@ contract Stampost is Ownable {
     // save letter
 
     Letter memory letter = Letter(
+      totalLetters +1,
       block.timestamp,
       msg.sender,
       _recepient,
@@ -310,7 +312,13 @@ contract Stampost is Ownable {
     return result;
   }
 
-  function getMail(uint256 letterId) public returns (Letter memory letter) {
+  function getMail(uint256 letterId) public view returns (Letter memory letter) {
+    letter = letters[letterId];
+    require(letter.isSet, "No letter with this id");
+    require(letter.to == msg.sender, "Not your letter");
+  }
+
+  function markAsOpened(uint256 letterId) public returns (Letter memory letter) {
     letter = letters[letterId];
 
     console.log(letter.isSet);
