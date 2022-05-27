@@ -24,8 +24,7 @@ const Inbox: NextPageWithLayout = () => {
         console.log('getRequestsForAddress response', resultIncoming)
         const resultMapped = resultIncoming.map(parseRequest)
         console.log('resultMapped response', resultMapped)
-        //setListRequests(resultMapped)
-        setListRequests(mockJsonList)
+        setListRequests(resultMapped)
       })
     }
   }, [Stampost])
