@@ -3,10 +3,10 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useWeb3React } from '@web3-react/core'
 
 import { Contract } from '@ethersproject/contracts'
-import stamp_deploy from '../../../contracts/deployments/goerli/STAMP.json'
-import stampost_deploy from '../../../contracts/deployments/goerli/Stampost.json'
-import stamp_abi from '../../artifact/contracts/STAMP.sol/STAMP.json'
-import stampost_abi from '../../artifact/contracts/Stampost.sol/Stampost.json'
+import stamp_deploy from '../../../../contracts/deployments/goerli/STAMP.json'
+import stampost_deploy from '../../../../contracts/deployments/goerli/Stampost.json'
+import stamp_abi from '../../../artifact/contracts/STAMP.sol/STAMP.json'
+import stampost_abi from '../../../artifact/contracts/Stampost.sol/Stampost.json'
 
 export enum ContractName {
   STAMP,

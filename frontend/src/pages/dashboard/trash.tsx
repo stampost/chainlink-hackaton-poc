@@ -4,7 +4,7 @@ import { Button, Space, Typography } from 'antd'
 import { DashboardLayout } from '../../components/dashboardLayout'
 import { NextPageWithLayout } from '../_app'
 import useSWR from 'swr'
-import { ContractName, useContract } from '../../hooks/useContract'
+import { ContractName, useContract } from '../../hooks/core/useContract'
 import { useWeb3React } from '@web3-react/core'
 import { Spin } from 'antd'
 

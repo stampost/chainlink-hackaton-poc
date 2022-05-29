@@ -1,3 +1,5 @@
+import { MessageInfo } from '../hooks/types/messageInfo'
+
 const getStatusById = (statusId: number) => {
   switch (statusId) {
     case 0:
@@ -7,16 +9,6 @@ const getStatusById = (statusId: number) => {
     case 2:
       return 'Declined'
   }
-}
-
-export type MessageInfo = {
-  id: string
-  timestamp: string
-  from: string
-  to: string
-  stamps: string
-  statusId: number
-  status: string
 }
 
 export const parseRequest = (request: { [x: string]: number }): MessageInfo => {

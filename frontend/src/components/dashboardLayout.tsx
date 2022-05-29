@@ -8,7 +8,7 @@ import { PlusCircleFilled } from '@ant-design/icons'
 import { Typography } from 'antd'
 import { Navbar } from './navbar'
 import { useRouter } from 'next/router'
-import { ContractName, useContract } from '../hooks/useContract'
+import { ContractName, useContract } from '../hooks/core/useContract'
 
 const { Text } = Typography
 

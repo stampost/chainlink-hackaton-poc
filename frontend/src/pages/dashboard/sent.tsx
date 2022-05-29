@@ -4,15 +4,17 @@ import { ReactElement, useEffect } from 'react'
 import { Typography } from 'antd'
 import { DashboardLayout } from '../../components/dashboardLayout'
 import { NextPageWithLayout } from '../_app'
+import { useGetIncomingMessages } from '../../hooks/useGetIncomingMessages'
+import { useGetSentMessages } from '../../hooks/useGetSentMessages'
 
 const { Text } = Typography
 
 const Inbox: NextPageWithLayout = () => {
-  const { chainId, account, activate, active, library } = useWeb3React<Web3Provider>()
+  const { loading, data, error } = useGetSentMessages()
 
   useEffect(() => {
-    console.log('dashboard sent', chainId, account, active)
-  })
+    console.log('dashboard sent', loading, data, error)
+  }, [loading, data, error])
 
   return <div>sent</div>
 }
