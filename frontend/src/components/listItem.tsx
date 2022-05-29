@@ -33,8 +33,13 @@ const getContent = (data: MessageInfo) => {
 }
 
 export const ListItem = ({ data }: { data: MessageInfo }) => {
+  const onClick = () => {
+    if (data.status === 0) {
+    }
+  }
+
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={onClick}>
       <div className={styles.leftBlock}>
         <div className={styles.indicatorBlock}>{getIndicator(data)}</div>
         <div className={styles.dateBlock}>{data.timestamp}</div>

@@ -1,6 +1,3 @@
-import { FetchHookReturn } from "./fetchHookReturn";
+import { FetchHookReturn } from './fetchHookReturn'
 
-export type UpdateHookReturn<T> = [
-    (data: object) => void,
-    FetchHookReturn<T>
-]
+export type UpdateHookReturn<U, T> = [(data: U) => void, FetchHookReturn<T>]
